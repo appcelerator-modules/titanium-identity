@@ -13,6 +13,6 @@ copyright: Copyright (c) 2017-present by Axway Appcelerator
 # these should not be edited
 name: titanium-identity
 moduleid: ti.identity
-guid: ae6ffc93-6e6e-4251-8373-b0cb263a1662
+guid: c3d987a8-8bd4-42cd-a3e4-2a75952d1ea0
 platform: iphone
 minsdk: 6.2.0

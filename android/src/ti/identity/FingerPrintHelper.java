@@ -14,20 +14,9 @@ import android.os.CancellationSignal;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
-
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.FragmentActivity;
-
-import org.appcelerator.kroll.KrollDict;
-import org.appcelerator.kroll.KrollFunction;
-import org.appcelerator.kroll.KrollObject;
-import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.kroll.common.Log;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.util.HashMap;
@@ -35,6 +24,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
+import org.appcelerator.kroll.KrollObject;
+import org.appcelerator.kroll.common.Log;
+import org.appcelerator.titanium.TiApplication;
 
 public class FingerPrintHelper extends BiometricPrompt.AuthenticationCallback
 {
@@ -103,7 +100,8 @@ public class FingerPrintHelper extends BiometricPrompt.AuthenticationCallback
 	}
 
 	@SuppressLint("MissingPermission,NewApi")
-	public void startListening(KrollFunction callback, KrollObject obj)
+	public void startListening(KrollFunction callback, String title, String subtitle, String negativeButtonText,
+							   KrollObject obj)
 	{
 		if (!isDeviceSupported()) {
 			return;
@@ -125,8 +123,22 @@ public class FingerPrintHelper extends BiometricPrompt.AuthenticationCallback
 		mSelfCancelled = false;
 
 		final BiometricPrompt.PromptInfo.Builder promptInfo = new BiometricPrompt.PromptInfo.Builder();
-		promptInfo.setTitle("Scan Fingerprint");
-		promptInfo.setNegativeButtonText("Cancel");
+
+		if (title != null) {
+			promptInfo.setTitle(title);
+		} else {
+			promptInfo.setTitle("Scan Fingerprint");
+		}
+
+		if (subtitle != null) {
+			promptInfo.setSubtitle(subtitle);
+		}
+
+		if (negativeButtonText != null) {
+			promptInfo.setNegativeButtonText(negativeButtonText);
+		} else {
+			promptInfo.setNegativeButtonText("Cancel");
+		}
 
 		final Executor executor = Executors.newSingleThreadExecutor();
 		final BiometricPrompt prompt =

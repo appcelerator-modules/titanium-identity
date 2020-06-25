@@ -6,19 +6,17 @@
  */
 package ti.identity;
 
-import org.appcelerator.kroll.KrollProxy;
-import org.appcelerator.kroll.KrollModule;
-import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.KrollDict;
-import org.appcelerator.kroll.KrollFunction;
-import org.appcelerator.titanium.util.TiConvert;
-
-import java.lang.Override;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Build;
+import java.lang.Override;
+import java.util.HashMap;
+import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
+import org.appcelerator.kroll.KrollModule;
+import org.appcelerator.kroll.KrollProxy;
+import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.Log;
+import org.appcelerator.titanium.util.TiConvert;
 
 @Kroll.module(name = "Identity", id = "ti.identity")
 public class TitaniumIdentityModule extends KrollModule
@@ -144,8 +142,12 @@ public class TitaniumIdentityModule extends KrollModule
 		}
 		if (params.containsKey("callback")) {
 			Object callback = params.get("callback");
+			String title = (String) params.get("title");
+			String subTitle = (String) params.get("subTitle");
+			String cancelRaison = (String) params.get("cancelRaison");
 			if (callback instanceof KrollFunction) {
-				mfingerprintHelper.startListening((KrollFunction) callback, getKrollObject());
+				mfingerprintHelper.startListening((KrollFunction) callback, title, subTitle, cancelRaison,
+												  getKrollObject());
 			}
 		}
 	}

@@ -17,13 +17,15 @@ btn.addEventListener('click', function(){
 		alert("Touch ID is not supported on this device!");
 		return;
 	}
-	
+
 	TiIdentity.authenticate({
-		reason: 'We need your fingerprint to continue.',
+		title : "Biometric login for my app", // default: "Scan Fingerprint"
+		subTitle : "Log in using your biometric credential", // optional
+		cancelRaison : "Use account password", // default: "Cancel"
 		callback: function(e) {
 			if (!e.success) {
 				alert('Message: ' + e.error);
-				
+
 			} else {
 				alert('YAY! success');
 			}
