@@ -64,7 +64,6 @@ description: |
         authPhrase = 'Touch ID';
     }
     ```
-        
     ## Face ID Requirements (iOS only)
 
     For Face ID to work properly, you need to add a **`<key>`** item to the
@@ -550,11 +549,23 @@ properties:
   - name: reason
     optional: false
     summary: |
-        Note: This property is iOS only!
-
         Message displayed in the authentication dialog describing why the
-        application is requesting authentication.
+        application is requesting authentication. Android: The title of the dialog.
     type: String
+
+  - name: reasonSubtitle
+    optional: true
+    summary: |
+        Subtitle of the authentication dialog (2nd line).
+    type: String
+    platforms: [android]
+
+  - name: reasonText
+    optional: true
+    summary: |
+        Text of the authentication dialog (3rd line).
+    type: String
+    platforms: [android]
 
   - name: allowableReuseDuration
     summary: |
@@ -591,12 +602,12 @@ properties:
 
   - name: cancelTitle
     summary: |
-        Note: This property is iOS only!
-
         Allows cancel button title customization. A default localized title "Cancel"
         is used when this property is not defined or is set to empty string.
+        Android: The default value will be "Cancel".
     type: String
     since: "6.1.0"
+    platforms: [android, iphone, ipad]
     osver: {ios: {min: "10.0"}}
 
   - name: keepAlive

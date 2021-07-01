@@ -25,6 +25,10 @@ public class TitaniumIdentityModule extends KrollModule
 	public static final int PERMISSION_CODE_FINGERPRINT = 99;
 
 	public static final String PROPERTY_AUTHENTICATION_POLICY = "authenticationPolicy";
+	public static final String PROPERTY_REASON = "reason";
+	public static final String PROPERTY_REASON_SUBTITLE = "reasonSubtitle";
+	public static final String PROPERTY_REASON_TEXT = "reasonText";
+	public static final String PROPERTY_CANCEL_TITLE = "cancelTitle";
 
 	@Kroll.constant
 	public static final int SUCCESS = 0;
@@ -87,6 +91,10 @@ public class TitaniumIdentityModule extends KrollModule
 	private Throwable fingerprintHelperException;
 
 	private static int authenticationPolicy = AUTHENTICATION_POLICY_BIOMETRICS;
+	public static String reason = "Biometric authentication";
+	public static String reasonSubtitle = "";
+	public static String reasonText = "";
+	public static String negativeButtonText = "Cancel";
 
 	public TitaniumIdentityModule()
 	{
@@ -138,6 +146,19 @@ public class TitaniumIdentityModule extends KrollModule
 		if (params == null || mfingerprintHelper == null) {
 			return;
 		}
+		if (params.containsKey(PROPERTY_REASON)) {
+			reason = TiConvert.toString(params.get(PROPERTY_REASON), reason);
+		}
+		if (params.containsKey(PROPERTY_REASON_TEXT)) {
+			reasonText = TiConvert.toString(params.get(PROPERTY_REASON_TEXT), "");
+		}
+		if (params.containsKey(PROPERTY_REASON_SUBTITLE)) {
+			reasonSubtitle = TiConvert.toString(params.get(PROPERTY_REASON_SUBTITLE), "");
+		}
+		if (params.containsKey(PROPERTY_CANCEL_TITLE)) {
+			negativeButtonText = TiConvert.toString(params.get(PROPERTY_CANCEL_TITLE), negativeButtonText);
+		}
+
 		if (params.containsKey("callback")) {
 			Object callback = params.get("callback");
 			if (callback instanceof KrollFunction) {
